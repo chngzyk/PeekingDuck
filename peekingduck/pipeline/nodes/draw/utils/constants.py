@@ -4,6 +4,7 @@ BLIZZARD = [241, 232, 164]
 VIOLET_BLUE = [188, 118, 119]
 TOMATO = [77, 103, 255]
 RED = [46, 68, 244]
+PRIMARY_PALETTE_LENGTH = 5
 PRIMARY_PALETTE = [CHAMPAGNE, BLIZZARD, TOMATO, VIOLET_BLUE, RED]
 
 # constants for thin look
@@ -35,5 +36,7 @@ LOWER_SATURATION = 0.5
 LEGEND_BOX = {
     'alpha': 0.5,
     'beta': 0.5,
-    'gamma': 0
+    'gamma': 0,
+    'text_colour': [0,0,0],
+    'text_thickness': 1
 }

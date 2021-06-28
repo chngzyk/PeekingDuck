@@ -74,4 +74,4 @@ def draw_pts(frame: np.array, pts: List[Tuple[float]]) -> None:
         pts (List[Tuple[float]]): bottom midpoints of bboxes
     """
     for point in pts:
-        cv2.circle(frame, point, 5, KEYPOINT_DOT_COLOR, -1)
+        cv2.circle(frame, point, 5, constants.CHAMPAGNE, -1)
