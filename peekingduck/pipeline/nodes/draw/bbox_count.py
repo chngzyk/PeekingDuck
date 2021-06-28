@@ -14,7 +14,7 @@ limitations under the License."""
 
 from typing import Any, Dict
 from peekingduck.pipeline.nodes.node import AbstractNode
-from .utils.drawfunctions import draw_count
+from peekingduck.pipeline.nodes.draw.utils.legend import draw_count
 
 
 class Node(AbstractNode):

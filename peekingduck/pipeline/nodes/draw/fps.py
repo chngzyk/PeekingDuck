@@ -18,7 +18,7 @@ from typing import Any, Dict
 from time import perf_counter
 
 from peekingduck.pipeline.nodes.node import AbstractNode
-from .utils.drawfunctions import draw_fps
+from peekingduck.pipeline.nodes.draw.utils.legend import draw_fps
 
 NUM_FRAMES = 14
 

@@ -17,7 +17,7 @@ from typing import Any, Dict, List
 
 import numpy as np
 from peekingduck.pipeline.nodes.node import AbstractNode
-from peekingduck.pipeline.nodes.draw.utils.drawfunctions import draw_bboxes, draw_tags
+from peekingduck.pipeline.nodes.draw.utils.bbox import draw_bboxes, draw_tags
 
 
 class Node(AbstractNode):

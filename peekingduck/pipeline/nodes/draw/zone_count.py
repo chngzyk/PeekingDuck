@@ -16,7 +16,7 @@ limitations under the License.
 
 from typing import Any, Dict
 from peekingduck.pipeline.nodes.node import AbstractNode
-from peekingduck.pipeline.nodes.draw.utils.drawfunctions import draw_zone_count
+from peekingduck.pipeline.nodes.draw.utils.zone import draw_zone_count
 
 
 class Node(AbstractNode):
