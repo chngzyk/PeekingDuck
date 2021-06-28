@@ -4,6 +4,7 @@ BLIZZARD = [241, 232, 164]
 VIOLET_BLUE = [188, 118, 119]
 TOMATO = [77, 103, 255]
 RED = [46, 68, 244]
+BLACK = [0, 0, 0]
 PRIMARY_PALETTE_LENGTH = 5
 PRIMARY_PALETTE = [CHAMPAGNE, BLIZZARD, TOMATO, VIOLET_BLUE, RED]
 
@@ -16,7 +17,7 @@ THIN = {
 
 # constants for thick look
 THICK = {
-    'thickness': 2,
+    'thickness': 3,
     'caps': False,
     'txt_bg': True
 }
@@ -40,3 +41,6 @@ LEGEND_BOX = {
     'text_colour': [0,0,0],
     'text_thickness': 1
 }
+
+# constants for pts
+POINT_RADIUS = 5
