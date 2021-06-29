@@ -1,23 +1,25 @@
-from typing import List, Tuple, Any, Iterable, Union
+"""Copyright 2021 AI Singapore
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
+
+from typing import Tuple, Any, Iterable, Union
 import numpy as np
 import cv2
-from cv2 import FONT_HERSHEY_SIMPLEX, LINE_AA
 from peekingduck.pipeline.nodes.draw.utils.constants import \
-    CHAMPAGNE, THICK
+    CHAMPAGNE, THICK, POINT_RADIUS
 from peekingduck.pipeline.nodes.draw.utils.general import \
     get_image_size, project_points_onto_original_image
 
-SKELETON_SHORT_NAMES = (
-    "N", "LEY", "REY", "LEA", "REA", "LSH",
-    "RSH", "LEL", "REL", "LWR", "RWR",
-    "LHI", "RHI", "LKN", "RKN", "LAN", "RAN")
-
-SKELETON = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13],
-            [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
-            [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4],
-            [3, 5], [4, 6], [5, 7]]
-
-KEYPONT_DOT_RADIUS = 7
 
 def draw_human_poses(image: np.array,
                      keypoints: np.ndarray,
@@ -38,9 +40,8 @@ def draw_human_poses(image: np.array,
         for i in range(num_persons):
             _draw_connections(image, keypoint_conns[i],
                               image_size, CHAMPAGNE)
-            _draw_keypoints(image, keypoints[i],
-                            keypoint_scores[i], image_size,
-                            CHAMPAGNE, KEYPONT_DOT_RADIUS)
+            _draw_keypoints(image, keypoints[i], image_size,
+                            CHAMPAGNE, POINT_RADIUS)
 
 
 def _draw_connections(frame: np.array,
@@ -55,12 +56,11 @@ def _draw_connections(frame: np.array,
                      (pt1[0], pt1[1]),
                      (pt2[0], pt2[1]),
                      connection_color,
-                     THICK['thickness'])
+                     THICK)
 
 
 def _draw_keypoints(frame: np.ndarray,
                     keypoints: np.ndarray,
-                    scores: np.ndarray,
                     image_size: Tuple[int, int],
                     keypoint_dot_color: Tuple[int, int, int],
                     keypoint_dot_radius: int) -> None:
@@ -69,7 +69,7 @@ def _draw_keypoints(frame: np.ndarray,
     img_keypoints = project_points_onto_original_image(
         keypoints, image_size)
 
-    for idx, keypoint in enumerate(img_keypoints):
+    for _, keypoint in enumerate(img_keypoints):
         _draw_one_keypoint_dot(frame, keypoint, keypoint_dot_color, keypoint_dot_radius)
 
 

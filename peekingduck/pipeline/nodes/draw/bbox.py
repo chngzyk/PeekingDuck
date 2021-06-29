@@ -26,6 +26,5 @@ class Node(AbstractNode):
         super().__init__(config, node_path=__name__)
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        print(inputs)
         draw_bboxes(inputs["img"], inputs["bboxes"], inputs["bbox_labels"])  # type: ignore
         return {}
