@@ -16,7 +16,7 @@ from typing import Tuple, Any, Iterable, Union
 import numpy as np
 import cv2
 from peekingduck.pipeline.nodes.draw.utils.constants import \
-    CHAMPAGNE, THICK, POINT_RADIUS
+    CHAMPAGNE, THICK, POINT_RADIUS, TOMATO
 from peekingduck.pipeline.nodes.draw.utils.general import \
     get_image_size, project_points_onto_original_image
 

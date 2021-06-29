@@ -17,14 +17,14 @@ import numpy as np
 import cv2
 from cv2 import FONT_HERSHEY_SIMPLEX, LINE_AA
 from peekingduck.pipeline.nodes.draw.utils.constants import \
-    CHAMPAGNE, BLACK, NORMAL_FONTSCALE, POINT_RADIUS, FILLED, VERY_THICK
+    CHAMPAGNE, BLACK, THICK, VERY_THICK, TOMATO, NORMAL_FONTSCALE, POINT_RADIUS, FILLED
 from peekingduck.pipeline.nodes.draw.utils.general import \
     get_image_size, project_points_onto_original_image
 
 
 def draw_bboxes(frame: np.array,
                 bboxes: List[List[float]],
-                bbox_labels: List[str]) -> None:
+                bbox_labels: List[str] = None) -> None:
     """Draw bboxes onto an image frame.
 
     Args:
@@ -34,14 +34,13 @@ def draw_bboxes(frame: np.array,
     """
     image_size = get_image_size(frame)
     for i, bbox in enumerate(bboxes):
-        _draw_bbox(frame, bbox, bbox_labels[i],
-                   image_size)
+        _draw_bbox(frame, bbox, image_size, (bbox_labels[i] if bbox_labels else None))
 
 
 def _draw_bbox(frame: np.array,
                bbox: List[float],
-               bbox_label: str,
-               image_size: Tuple[int, int]) -> np.array:
+               image_size: Tuple[int, int],
+               bbox_label: str = None) -> np.array:
     """ Draw a single bounding box """
     top_left, bottom_right = project_points_onto_original_image(
         bbox, image_size)
@@ -49,11 +48,20 @@ def _draw_bbox(frame: np.array,
                   (bottom_right[0], bottom_right[1]),
                   CHAMPAGNE, VERY_THICK)
 
-    # get label size
+    if bbox_label:
+        _draw_label(frame, top_left, bbox_label, BLACK)
+
+
+def _draw_label(frame: np.array,
+                top_left: Tuple[int, int],
+                bbox_label: str,
+                text_colour: Tuple[int, int, int]) -> None:
+    """Draw bbox label at top left of bbox"""
+        # get label size
     (text_width, text_height), baseline = cv2.getTextSize(bbox_label,
                                                           FONT_HERSHEY_SIMPLEX,
                                                           NORMAL_FONTSCALE,
-                                                          VERY_THICK)
+                                                          THICK)
     # put filled text rectangle
     cv2.rectangle(frame,
                   (top_left[0], top_left[1]),
@@ -64,14 +72,12 @@ def _draw_bbox(frame: np.array,
     # put text above rectangle
     bbox_label = bbox_label[:1].capitalize() + bbox_label[1:]
     cv2.putText(frame, bbox_label, (top_left[0], int(top_left[1]-6)), FONT_HERSHEY_SIMPLEX,
-                NORMAL_FONTSCALE, BLACK, 2, LINE_AA)
-
+                NORMAL_FONTSCALE, text_colour, THICK, LINE_AA)
 
 
 def draw_tags(frame: np.array,
               bboxes: List[List[float]],
-              tags: List[str],
-              color: Tuple[int, int, int]) -> None:
+              tags: List[str]) -> None:
     """Draw tags above bboxes.
 
     Args:
@@ -82,19 +88,28 @@ def draw_tags(frame: np.array,
     """
     image_size = get_image_size(frame)
     for idx, bbox in enumerate(bboxes):
-        _draw_tag(frame, bbox, tags[idx], image_size, color)
+        _draw_tag(frame, bbox, tags[idx], image_size)
 
 
 def _draw_tag(frame: np.array,
               bbox: np.array,
               tag: str,
-              image_size: Tuple[int, int],
-              color: Tuple[int, int, int]) -> None:
+              image_size: Tuple[int, int]) -> None:
     """Draw a tag above a single bounding box.
     """
-    top_left, _ = project_points_onto_original_image(bbox, image_size)
-    position = int(top_left[0]), int(top_left[1]-25)
-    cv2.putText(frame, tag, position, FONT_HERSHEY_SIMPLEX, 1, color, 2)
+    top_left, btm_right = project_points_onto_original_image(bbox, image_size)
+
+    # Find offset to centralize text
+    (text_width, text_height), baseline = cv2.getTextSize(tag,
+                                                        FONT_HERSHEY_SIMPLEX,
+                                                        NORMAL_FONTSCALE,
+                                                        THICK)
+    bbox_width = btm_right[0] - top_left[0]
+    offset = bbox_width - text_width
+    position = (int(top_left[0]+offset), int(top_left[1]-baseline))
+    cv2.putText(frame, tag, position, FONT_HERSHEY_SIMPLEX,
+                NORMAL_FONTSCALE, TOMATO, VERY_THICK)
+
 
 
 def draw_pts(frame: np.array, pts: List[Tuple[float]]) -> None:

@@ -37,7 +37,6 @@ class Node(AbstractNode):
             outputs (dict): Dict with keys "img".
         """
 
-        draw_tags(inputs["img"], inputs["bboxes"],
-                  inputs["obj_tags"], self.tag_color)
+        draw_tags(inputs["img"], inputs["bboxes"], inputs["obj_tags"])
 
         return {}

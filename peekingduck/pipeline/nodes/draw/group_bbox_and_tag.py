@@ -47,10 +47,8 @@ class Node(AbstractNode):
         group_tags = self._get_group_tags(
             inputs["large_groups"], self.tag)
 
-        draw_bboxes(inputs["img"], group_bboxes,
-                    self.bbox_color, self.bbox_thickness)   # type: ignore
-        draw_tags(inputs["img"], group_bboxes,
-                  group_tags, self.bbox_color)  # type: ignore
+        draw_bboxes(inputs["img"], group_bboxes)   # type: ignore
+        draw_tags(inputs["img"], group_bboxes, group_tags)  # type: ignore
 
         return {}
 

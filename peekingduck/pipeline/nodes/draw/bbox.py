@@ -24,7 +24,11 @@ class Node(AbstractNode):
 
     def __init__(self, config: Dict[str, Any]) -> None:
         super().__init__(config, node_path=__name__)
+        self.show_labels = config['show_labels']
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        draw_bboxes(inputs["img"], inputs["bboxes"], inputs["bbox_labels"])  # type: ignore
+        if self.show_labels:
+            draw_bboxes(inputs["img"], inputs["bboxes"], inputs["bbox_labels"])  # type: ignore
+        else:
+            draw_bboxes(inputs["img"], inputs["bboxes"])  # type: ignore
         return {}
