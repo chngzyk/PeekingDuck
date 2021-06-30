@@ -1,0 +1,14 @@
+input: ["img"]
+output: ["img"]
+
+legend_choices: {
+  fps: True,
+  object_count: False,
+  zone_count: False,
+}
+
+required_input_dict: {
+  fps: "",
+  object_count: count,
+  zone_count: zone_count
+}

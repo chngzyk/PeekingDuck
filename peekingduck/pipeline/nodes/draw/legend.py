@@ -15,29 +15,23 @@ limitations under the License.
 """
 
 from typing import Any, Dict
-
 from peekingduck.pipeline.nodes.node import AbstractNode
-from peekingduck.pipeline.nodes.draw.utils.bbox import draw_tags
-from peekingduck.pipeline.nodes.draw.utils.constants import TOMATO
+from peekingduck.pipeline.nodes.draw.utils.legend import draw_legends
 
 
 class Node(AbstractNode):
-    """Node that draws tags above bounding boxes"""
+    """Draw node for drawing bboxes onto image"""
 
     def __init__(self, config: Dict[str, Any]) -> None:
         super().__init__(config, node_path=__name__)
-        self.tag_color = config["tag_color"]
+        self.legend_choices = config['legend_choices']
+        self.required_input_dict = config['required_input_dict']
+        # add required input of chosen legends into self.inputs
+        for key, value in self.legend_choices.items():
+            if value:
+                self.inputs.append(self.required_input_dict[key])
+
 
     def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Draws a tag above each bounding box.
-
-        Args:
-            inputs (dict): Dict with keys "bboxes", "obj_tags", "img".
-
-        Returns:
-            outputs (dict): Dict with keys "img".
-        """
-
-        draw_tags(inputs["img"], inputs["bboxes"], inputs["obj_tags"], TOMATO)
-
+        draw_legends(inputs, self.legend_choices)  # type: ignore
         return {}

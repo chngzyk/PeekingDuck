@@ -18,6 +18,7 @@ from typing import Any, Dict, List
 import numpy as np
 from peekingduck.pipeline.nodes.node import AbstractNode
 from peekingduck.pipeline.nodes.draw.utils.bbox import draw_bboxes, draw_tags
+from peekingduck.pipeline.nodes.draw.utils.constants import TOMATO
 
 
 class Node(AbstractNode):
@@ -47,8 +48,8 @@ class Node(AbstractNode):
         group_tags = self._get_group_tags(
             inputs["large_groups"], self.tag)
 
-        draw_bboxes(inputs["img"], group_bboxes)   # type: ignore
-        draw_tags(inputs["img"], group_bboxes, group_tags)  # type: ignore
+        draw_bboxes(inputs["img"], group_bboxes, TOMATO)   # type: ignore
+        draw_tags(inputs["img"], group_bboxes, group_tags, TOMATO)  # type: ignore
 
         return {}
 

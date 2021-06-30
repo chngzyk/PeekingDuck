@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
-from typing import List, Tuple, Any, Iterable, Union
+from typing import Dict, List, Tuple, Any, Iterable, Union
 import numpy as np
 import cv2
 from cv2 import FONT_HERSHEY_SIMPLEX, LINE_AA
@@ -47,3 +47,13 @@ def draw_fps(frame: np.array, current_fps: float) -> None:
 
     cv2.putText(frame, text, text_location, FONT_HERSHEY_SIMPLEX, NORMAL_FONTSCALE,
                 LEGEND_BOX['text_colour'], LEGEND_BOX['thickness'], LINE_AA)
+
+
+def draw_legends(inputs: Dict[str, Any], choices: Dict[str, bool]) -> None:
+    """ Draw legends onto image
+
+    Args:
+        frame (np.array): image of current frame
+        choices (Dict[str, bool]): list of legends to be drawn
+    """
+    raise NotImplementedError()

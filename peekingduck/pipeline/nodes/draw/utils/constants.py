@@ -13,12 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License."""
 
 # main palatte of peekingduck
+from tensorflow.python.ops.functional_ops import While
+
+
 CHAMPAGNE = (156, 223, 244)
 BLIZZARD = (241, 232, 164)
 VIOLET_BLUE = (188, 118, 119)
 TOMATO = (77, 103, 255)
 RED = (46, 68, 244)
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 PRIMARY_PALETTE_LENGTH = 5
 PRIMARY_PALETTE = [CHAMPAGNE, BLIZZARD, TOMATO, VIOLET_BLUE, RED]
 
@@ -48,4 +52,4 @@ LEGEND_BOX = {
 }
 
 # constants for pts
-POINT_RADIUS = 7
+POINT_RADIUS = 5

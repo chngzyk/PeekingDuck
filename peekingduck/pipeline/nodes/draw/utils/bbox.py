@@ -24,37 +24,43 @@ from peekingduck.pipeline.nodes.draw.utils.general import \
 
 def draw_bboxes(frame: np.array,
                 bboxes: List[List[float]],
+                colour: Tuple[int, int, int],
                 bbox_labels: List[str] = None) -> None:
     """Draw bboxes onto an image frame.
 
     Args:
         frame (np.array): image of current frame
         bboxes (List[List[float]]): bounding box coordinates
+        colour (Tuple[int, int, int]): colour used for bounding box
         bbox_labels (List[str]): labels of object detected
     """
     image_size = get_image_size(frame)
     for i, bbox in enumerate(bboxes):
-        _draw_bbox(frame, bbox, image_size, (bbox_labels[i] if bbox_labels else None))
-
+        if bbox_labels is not None:
+            _draw_bbox(frame, bbox, image_size, colour, bbox_labels[i])
+        else:
+            _draw_bbox(frame, bbox, image_size, colour)
 
 def _draw_bbox(frame: np.array,
                bbox: List[float],
                image_size: Tuple[int, int],
+               colour: Tuple[int, int, int],
                bbox_label: str = None) -> np.array:
     """ Draw a single bounding box """
     top_left, bottom_right = project_points_onto_original_image(
         bbox, image_size)
     cv2.rectangle(frame, (top_left[0], top_left[1]),
                   (bottom_right[0], bottom_right[1]),
-                  CHAMPAGNE, VERY_THICK)
+                  colour, VERY_THICK)
 
     if bbox_label:
-        _draw_label(frame, top_left, bbox_label, BLACK)
+        _draw_label(frame, top_left, bbox_label, colour, BLACK)
 
 
 def _draw_label(frame: np.array,
                 top_left: Tuple[int, int],
                 bbox_label: str,
+                bg_colour: Tuple[int, int, int],
                 text_colour: Tuple[int, int, int]) -> None:
     """Draw bbox label at top left of bbox"""
         # get label size
@@ -65,8 +71,9 @@ def _draw_label(frame: np.array,
     # put filled text rectangle
     cv2.rectangle(frame,
                   (top_left[0], top_left[1]),
-                  (int(top_left[0]+text_width), int(top_left[1]-text_height-baseline)),
-                  CHAMPAGNE,
+                  (int(top_left[0] + text_width),
+                   int(top_left[1] - text_height - baseline)),
+                  bg_colour,
                   FILLED)
 
     # put text above rectangle
@@ -77,7 +84,8 @@ def _draw_label(frame: np.array,
 
 def draw_tags(frame: np.array,
               bboxes: List[List[float]],
-              tags: List[str]) -> None:
+              tags: List[str],
+              colour: Tuple[int, int, int]) -> None:
     """Draw tags above bboxes.
 
     Args:
@@ -88,13 +96,14 @@ def draw_tags(frame: np.array,
     """
     image_size = get_image_size(frame)
     for idx, bbox in enumerate(bboxes):
-        _draw_tag(frame, bbox, tags[idx], image_size)
+        _draw_tag(frame, bbox, tags[idx], image_size, colour)
 
 
 def _draw_tag(frame: np.array,
               bbox: np.array,
               tag: str,
-              image_size: Tuple[int, int]) -> None:
+              image_size: Tuple[int, int],
+              colour: Tuple[int, int, int]) -> None:
     """Draw a tag above a single bounding box.
     """
     top_left, btm_right = project_points_onto_original_image(bbox, image_size)
@@ -105,10 +114,10 @@ def _draw_tag(frame: np.array,
                                                         NORMAL_FONTSCALE,
                                                         THICK)
     bbox_width = btm_right[0] - top_left[0]
-    offset = bbox_width - text_width
-    position = (int(top_left[0]+offset), int(top_left[1]-baseline))
+    offset = int((bbox_width - text_width) / 2)
+    position = (int(top_left[0] + offset), int(top_left[1] - baseline))
     cv2.putText(frame, tag, position, FONT_HERSHEY_SIMPLEX,
-                NORMAL_FONTSCALE, TOMATO, VERY_THICK)
+                NORMAL_FONTSCALE, colour, VERY_THICK)
 
 
 
