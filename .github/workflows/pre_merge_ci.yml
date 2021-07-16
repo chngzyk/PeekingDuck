@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   check_code:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
