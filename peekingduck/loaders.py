@@ -18,6 +18,7 @@ Helper classes to load configs, nodes
 
 import sys
 import os
+import re
 import importlib
 import logging
 import ast
@@ -132,8 +133,7 @@ class DeclarativeLoader:  # pylint: disable=too-few-public-methods
             self.logger.info(msg)
 
             if len(node_str_split) == 3:
-                path_to_node = ".".join(
-                    self.custom_folder_path.split('/')[-1:]) + "."
+                path_to_node = ".".join(re.split('\\\\|/', self.custom_folder_path)[-1:]) + "."
                 node_name = ".".join(node_str_split[-2:])
 
                 instantiated_node = self._init_node(path_to_node,
