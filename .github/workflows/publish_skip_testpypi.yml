@@ -1,8 +1,9 @@
 name: Skip Test Pypi and Publish to Pypi
 on:
-  create:
-    tags:
-      - 'v*.*.*'
+  workflow_dispatch:
+    push:
+      tags:
+        - 'v*.*.*'
 
 jobs:
   local-install-test:
