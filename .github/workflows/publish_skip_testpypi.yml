@@ -1,6 +1,6 @@
 name: Skip Test Pypi and Publish to Pypi
 env:
-  VERSION: ${{github.event.release.tag_name}}
+  VERSION: Testing
 on:
   workflow_dispatch
 
@@ -17,8 +17,3 @@ jobs:
       - name: Update Version Number
         run: |
           bash ./scripts/update_version.sh $VERSION
-      - name: Print name
-        shell: bash
-        run: echo " Print a single environment variable $VERSION "
-
-  
