@@ -19,6 +19,6 @@ jobs:
           bash ./scripts/update_version.sh $VERSION
       - name: Print name
         shell: bash
-        run: encho " Print a single environment variable $VERSION "
+        run: echo " Print a single environment variable $VERSION "
 
   
