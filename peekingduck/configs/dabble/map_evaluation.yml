@@ -1,0 +1,8 @@
+input: ["none", "pipeline_end", "bboxes"]
+output: ["img"]
+
+evaluation_type: "instances" # or "keypoints"
+evaluation_class: ["person"]
+images_dir: 'PeekingDuck/coco/val2017'
+instances_dir: 'PeekingDuck/coco/annotations/instances_val2017.json'
+keypoints_dir: 'PeekingDuck/coco/annotations/person_keypoints_val2017.json'
