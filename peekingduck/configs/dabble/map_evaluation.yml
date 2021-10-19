@@ -1,8 +1,8 @@
-input: ["none", "pipeline_end", "bboxes"]
-output: ["img"]
+input: ["none", "pipeline_end", "filename"]
+output: ["img", "pipeline_end", 'filename', 'saved_video_fps']
 
-evaluation_type: "instances" # or "keypoints"
-evaluation_class: ["person"]
+evaluation_task: "detection" # or "keypoints"
+evaluation_class: ["all"]
 images_dir: 'PeekingDuck/coco/val2017'
 instances_dir: 'PeekingDuck/coco/annotations/instances_val2017.json'
 keypoints_dir: 'PeekingDuck/coco/annotations/person_keypoints_val2017.json'

@@ -13,19 +13,20 @@
 # limitations under the License.
 
 """
-Pack object detection results into COCO format
+Pack pose estimation results into COCO format
 """
 
 import logging
 from typing import List, Dict, Any
 
-from peekingduck.pipeline.nodes.dabble.coco_utils.constants import COCO_CATEGORY_DICTIONARY
+import numpy as np
+
 from peekingduck.pipeline.nodes.draw.utils.general import project_points_onto_original_image
 
 
-class PackDetections:
+class PackKeypoints:
     """
-    Pack the outputs from PeekingDuck's object detection models into COCO's
+    Pack the outputs from PeekingDuck's pose estimation models into COCO's
     evaluation format.
     """
 
@@ -52,22 +53,17 @@ class PackDetections:
         img_id = filename_info[inputs["filename"]]['id']
         img_size = filename_info[inputs["filename"]]['image_size']
 
-        for bbox, bbox_label, bbox_score in zip(inputs["bboxes"],
-                                                inputs["bbox_labels"],
-                                                inputs["bbox_scores"]):
+        for keypoint, score in zip(inputs["keypoints"],
+                                   inputs["keypoint_scores"]):
 
-            bbox_label_index = COCO_CATEGORY_DICTIONARY[bbox_label]
+            keypoint = project_points_onto_original_image(keypoint, img_size)
 
-            bbox = project_points_onto_original_image(bbox, img_size)
-
-            bbox = [bbox[0][0],
-                    bbox[0][1],
-                    bbox[1][0] - bbox[0][0],
-                    bbox[1][1] - bbox[0][1]]
+            pred = np.append(keypoint, np.ones((len(keypoint), 1)), axis=1)
+            pred = list(pred.flat)
 
             model_predictions.append({"image_id": int(img_id),
-                                      "category_id": int(bbox_label_index),
-                                      "bbox": list(bbox),
-                                      "score": bbox_score})
+                                      "category_id": 1,
+                                      "keypoints": pred,
+                                      "score": sum(score)/len(score)})
 
         return model_predictions
