@@ -14,7 +14,7 @@ from peekingduck.pipeline.nodes.model.yolov4_license_plate.licenseplate_files.de
 def LP_config():
     filepath = os.path.join(
         os.getcwd(),
-        "tests/pipeline/nodes/model/yolov4_license_plate/test_yolov4_license_plate.yml",
+        "tests/pipeline/nodes/model/yolov4_license_plate/test_yolo_license_plate.yml",
     )
     with open(filepath) as file:
         node_config = yaml.safe_load(file)
