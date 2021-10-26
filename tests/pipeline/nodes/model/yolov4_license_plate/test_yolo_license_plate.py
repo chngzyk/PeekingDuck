@@ -45,14 +45,11 @@ def replace_download_weights(root, blob_file):
 
 @pytest.mark.mlmodel
 class TestLPYolo:
-    def test01(self):
+    def test_no_LP_image(self, test_no_lp_images, LPyolo):
+        blank_image = cv2.imread(test_no_lp_images)
+        # output = LPyolo.run({"img": blank_image})
+
         assert 0 == 0
-
-    # def test_no_LP_image(self, test_no_LP_images, LPyolo):
-    #     # blank_image = cv2.imread(test_no_LP_images)
-    #     # output = LPyolo.run({"img": blank_image})
-
-    #     assert 0 == 0
 
     # blank_image = cv2.imread(test_no_LP_images)
     # output = LPyolo.run({"img": blank_image})
