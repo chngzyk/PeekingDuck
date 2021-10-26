@@ -45,17 +45,17 @@ def replace_download_weights(root, blob_file):
 
 @pytest.mark.mlmodel
 class TestLPYolo:
-    # def test_no_LP_image(self, test_no_LP_images, LPyolo):
-    #     blank_image = cv2.imread(test_no_LP_images)
-    #     output = LPyolo.run({"img": blank_image})
-    #     expected_output = {"bboxes": [], "bbox_labels": [], "bbox_scores": []}
-    #     assert output.keys() == expected_output.keys()
-    #     assert type(output["bboxes"]) == np.ndarray
-    #     assert type(output["bbox_labels"]) == np.ndarray
-    #     assert type(output["bbox_scores"]) == np.ndarray
-    #     assert len(output["bboxes"]) == 0
-    #     assert len(output["bbox_labels"]) == 0
-    #     assert len(output["bbox_scores"]) == 0
+    def test_no_LP_image(self, test_no_LP_images, LPyolo):
+        blank_image = cv2.imread(test_no_LP_images)
+        output = LPyolo.run({"img": blank_image})
+        expected_output = {"bboxes": [], "bbox_labels": [], "bbox_scores": []}
+        assert output.keys() == expected_output.keys()
+        assert type(output["bboxes"]) == np.ndarray
+        assert type(output["bbox_labels"]) == np.ndarray
+        assert type(output["bbox_scores"]) == np.ndarray
+        assert len(output["bboxes"]) == 0
+        assert len(output["bbox_labels"]) == 0
+        assert len(output["bbox_scores"]) == 0
 
     # def test_at_least_one_LP_image(self, test_LP_images, LPyolo):
     #     test_img = cv2.imread(test_LP_images)
@@ -64,29 +64,29 @@ class TestLPYolo:
     #     assert len(output["bboxes"]) != 0
     #     assert len(output["bboxes"]) == len(output["bbox_labels"])
 
-    def test_no_weights(self, LP_config):
-        with mock.patch(
-            "peekingduck.weights_utils.checker.has_weights", return_value=False
-        ):
-            with mock.patch(
-                "peekingduck.weights_utils.downloader.download_weights",
-                wraps=replace_download_weights,
-            ):
-                with TestCase.assertLogs(
-                    "peekingduck.pipeline.nodes.model.yolov4_license_plate.LP_detector_model.logger"
-                ) as captured:
+    # def test_no_weights(self, LP_config):
+    #     with mock.patch(
+    #         "peekingduck.weights_utils.checker.has_weights", return_value=False
+    #     ):
+    #         with mock.patch(
+    #             "peekingduck.weights_utils.downloader.download_weights",
+    #             wraps=replace_download_weights,
+    #         ):
+    #             with TestCase.assertLogs(
+    #                 "peekingduck.pipeline.nodes.model.yolov4_license_plate.LP_detector_model.logger"
+    #             ) as captured:
 
-                    LPyolo = Node(config=LP_config)
-                    # records 0 - 20 records are updates to configs
-                    assert (
-                        captured.records[0].getMessage()
-                        == "---no LP weights detected. proceeding to download...---"
-                    )
-                    assert (
-                        captured.records[1].getMessage()
-                        == "---LP weights download complete.---"
-                    )
-                    assert LPyolo is not None
+    #                 LPyolo = Node(config=LP_config)
+    #                 # records 0 - 20 records are updates to configs
+    #                 assert (
+    #                     captured.records[0].getMessage()
+    #                     == "---no LP weights detected. proceeding to download...---"
+    #                 )
+    #                 assert (
+    #                     captured.records[1].getMessage()
+    #                     == "---LP weights download complete.---"
+    #                 )
+    #                 assert LPyolo is not None
 
     # def test_model_initialization(self, LP_config):
     #     detector = Detector(config=LP_config)
