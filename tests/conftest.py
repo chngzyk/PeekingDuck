@@ -105,7 +105,7 @@ def test_LP_images(request):
 
 
 @pytest.fixture(params=TEST_NO_LP_IMAGES)
-def test_no_LP_images(request):
+def test_no_lp_images(request):
     test_img_dir = os.path.join(PKD_DIR, "..", "images", "testing")
 
     yield os.path.join(test_img_dir, request.param)
