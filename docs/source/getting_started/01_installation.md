@@ -1,10 +1,10 @@
-## Install and Run PeekingDuck
+# Install and Run PeekingDuck
 
 1. Install PeekingDuck from [PyPI](https://pypi.org/project/peekingduck/).
     ```
     > pip install peekingduck
     ```
-    *Note: if installing on a ARM-based device such as a Raspberry Pi or M1 Macbook, include the `--no-dependencies` flag, and separately install other dependencies listed in our [requirements.txt](https://github.com/aimakerspace/PeekingDuck/blob/dev/requirements.txt). See our guide for [M1 Mac](https://peekingduck.readthedocs.io/en/stable/getting_started/01_installation.html#m1-mac-installation) installation.*
+    *Note: if installing on a ARM-based device such as a Raspberry Pi or M1 MacBook, include the `--no-dependencies` flag, and separately install other dependencies listed in our [requirements.txt](https://github.com/aimakerspace/PeekingDuck/blob/dev/requirements.txt). See our guide for [M1 Mac](https://peekingduck.readthedocs.io/en/stable/getting_started/01_installation.html#m1-mac-installation) installation.*
 
 2. Create a project folder at a convenient location, and initialize a PeekingDuck project.
     ```
@@ -42,7 +42,7 @@
 4. For more help on how to use PeekingDuck's command line interface, you can use `peekingduck --help`.
 
 
-### M1 Mac Installation
+## M1 Mac Installation
 
 Apple started releasing Macs with their proprietary [M1](https://en.wikipedia.org/wiki/Apple_M1) ARM-based chip in late 2020, a significant change from the previous Intel processors. We've successfully tested PeekingDuck on a few M1 Macs with these steps:
 
